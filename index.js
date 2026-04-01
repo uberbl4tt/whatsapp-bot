@@ -12,7 +12,13 @@ const HASBI = "238959733043272@lid";
 
 const client = new Client({
   puppeteer: {
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    args: ['--no-sandbox',
+  '--disable-setuid-sandbox',
+  '--disable-dev-shm-usage', // Uses /tmp instead of memory for shared memory
+  '--disable-accelerated-2d-canvas',
+  '--no-first-run',
+  '--no-zygote',
+  '--disable-gpu'],
   },
   authStrategy: new LocalAuth({
     dataPath: "auth",

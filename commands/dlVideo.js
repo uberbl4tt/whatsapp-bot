@@ -71,8 +71,8 @@ async function dlVideo(
     } else if (err.stderr?.includes("Private video")) {
       await processing?.edit("video ini private");
     } else {
-      await processing?.edit("terjadi kesalahan");
       console.error(err);
+      // await processing?.edit("terjadi kesalahan");
     }
   } finally {
     if (fs.existsSync(`${tmpPath}.mp4`)) fs.unlinkSync(`${tmpPath}.mp4`);
