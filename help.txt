@@ -1,0 +1,33 @@
+━━━━━━━━━━━━━━━━━━
+   hasbi's bot
+━━━━━━━━━━━━━━━━━━
+
+kirim gambar, video, atau gif untuk membuat stiker
+— tambahkan caption untuk nama stiker
+
+━━━━━━━━━━━━━━━━━━
+  perintah
+━━━━━━━━━━━━━━━━━━
+
+perintah harus dimulai dengan sebuah tanda seru (!)
+beberapa perintah yang tersedia:
+
+!ping
+mengecek status bot
+
+!yt <url>
+mendownload audio dari link youtube
+menerima link youtube maupun youtube music
+
+!yts <query>
+mencari lagu di youtube lalu mendownloadnya
+
+!ytr <handle>
+mengecek & mengirim link video terbaru dari sebuah channel
+— handle adalah id unik channel, biasanya diawali @
+
+━━━━━━━━━━━━━━━━━━
+_catatan:_
+- _perintah tak akan dilanjutkan bila dibarengi dengan media_
+- _support 2 perintah atau lebih sekaligus_
+- _project ini masih dalam tahap awal. hubungi hasbi bila terjadi error_
