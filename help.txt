@@ -6,6 +6,17 @@ kirim gambar, video, atau gif untuk membuat stiker
 — tambahkan caption untuk nama stiker
 
 ━━━━━━━━━━━━━━━━━━
+  link
+━━━━━━━━━━━━━━━━━━
+mengirim link media ke bot akan mendownload media tersebut sebagai foto/video.
+link yang disupport:
+1. youtube
+
+coming soon:
+1. tiktok
+2. instagram
+
+━━━━━━━━━━━━━━━━━━
   perintah
 ━━━━━━━━━━━━━━━━━━
 
@@ -15,19 +26,14 @@ beberapa perintah yang tersedia:
 !ping
 mengecek status bot
 
-!yt <url>
-mendownload audio dari link youtube
+!aud <url>
+mengekstrak dan mendownload audio dari youtube
 menerima link youtube maupun youtube music
 
 !yts <query>
-mencari lagu di youtube lalu mendownloadnya
-
-!ytr <handle>
-mengecek & mengirim link video terbaru dari sebuah channel
-— handle adalah id unik channel, biasanya diawali @
+mencari video di youtube lalu mendownloadnya sebagai audio
 
 ━━━━━━━━━━━━━━━━━━
 _catatan:_
 - _perintah tak akan dilanjutkan bila dibarengi dengan media_
-- _support 2 perintah atau lebih sekaligus_
-- _project ini masih dalam tahap awal. hubungi hasbi bila terjadi error_
+- _project ini masih dalam tahap awal. hubungi hasbi bila terjadi error (`!owner` untuk melihat kontak hasbi)_
