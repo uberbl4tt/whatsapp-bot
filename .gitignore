@@ -1,3 +1,6 @@
 .wwebjs_cache/
 auth/
 node_modules/
+.vscode/
+todo.md
+logs/
