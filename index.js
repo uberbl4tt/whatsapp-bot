@@ -1,5 +1,5 @@
-const { Client, LocalAuth } = require("whatsapp-web.js");
-const { isValidUrl } = require("./utils/isValidUrl.js")
+const client = require("./client.js");
+const { isValidUrl } = require("./utils/isValidUrl.js");
 const qrcode = require("qrcode-terminal");
 const { makeSticker } = require("./commands/makeSticker.js");
 const { yt } = require("./commands/aud.js");
@@ -9,21 +9,6 @@ const { dlVideo } = require("./commands/dlVideo.js");
 
 const PROCESSING_EMOJIS = ["🍳", "🧙", "🕵️", "🪄", "⏳", "🫡", "👍", "🧃"];
 const HASBI = "238959733043272@lid";
-
-const client = new Client({
-  puppeteer: {
-    args: ['--no-sandbox',
-  '--disable-setuid-sandbox',
-  '--disable-dev-shm-usage', // Uses /tmp instead of memory for shared memory
-  '--disable-accelerated-2d-canvas',
-  '--no-first-run',
-  '--no-zygote',
-  '--disable-gpu'],
-  },
-  authStrategy: new LocalAuth({
-    dataPath: "auth",
-  }),
-});
 
 client.on("ready", () => {
   console.log("Client is ready!");
