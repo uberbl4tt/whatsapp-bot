@@ -6,28 +6,30 @@ const { yt } = require("./commands/aud.js");
 const { yts } = require("./commands/auds.js");
 const fs = require("fs");
 const { dlVideo } = require("./commands/dlVideo.js");
+const { logger, setClient } = require("./logger.js");
 
 const PROCESSING_EMOJIS = ["🍳", "🧙", "🕵️", "🪄", "⏳", "🫡", "👍", "🧃"];
 const HASBI = "238959733043272@lid";
 
 client.on("ready", () => {
-  console.log("Client is ready!");
+  logger.info("Client is ready!");
+  setClient(client);
+  logger.debug("Sending bot status onto the group chat.");
+  client.sendMessage("120363407521951578@g.us", "Bot is online");
 });
 
 client.on("qr", (qr) => {
+  logger.warn("User is logged out.");
   qrcode.generate(qr, { small: true });
 });
 
+logger.info("Initializing client...");
 client.initialize();
 
 client.on("message_create", async (message) => {
   if (message.fromMe) return;
-
-  console.log(`Message received from ${message.from}:\n${message.body}`);
-
-  // for timer
-  console.log("Starting timer...");
-  const start = Date.now();
+  logger.info("Message received", { userId: message.from });
+  logger.info(`Content: ${message.body}`, { userId: message.from });
 
   try {
     const randomEmoji =
@@ -40,10 +42,14 @@ client.on("message_create", async (message) => {
 
     // if the command has a media, it will not check any other commands
     // sticker making
-    if (hasMedia) return await makeSticker(message, client);
+    if (hasMedia) {
+      logger.debug("Message has media.")
+      return await makeSticker(message, client);
+    }
 
     // ! as the command prefix
     if (isCommand) {
+      logger.debug("Message is a command.")
       // tokenizing
       const [command, ...rest] = message.body.slice(1).split(" ");
       const args = rest.join(" ");
@@ -51,28 +57,26 @@ client.on("message_create", async (message) => {
       switch (command) {
         case "help":
           const data = await fs.promises.readFile("./help.txt", "utf-8");
-          return await client.sendMessage(message.from, data.trim());
+           await client.sendMessage(message.from, data.trim());
         case "owner":
           contact = await client.getContactById(HASBI);
-          return await client.sendMessage(message.from, contact);
+           await client.sendMessage(message.from, contact);
         case "ping":
-          return await client.sendMessage(message.from, "pong!");
+           await client.sendMessage(message.from, "pong!");
         case "yt":
-          return await yt(message, client, args);
+           await yt(message, client, args);
         case "yts":
-          return await yts(message, client, args);
+           await yts(message, client, args);
       }
     }
 
     if (isUrl) {
-      dlVideo(message, client, message.body)
+      dlVideo(message, client, message.body);
     }
   } catch (err) {
-    console.error(err);
+      logger.error(err.message, { userId: message.from, stack: err.stack });
   } finally {
-    console.log("Done!");
     await message.react("");
-    console.log(`Took ${(Date.now() - start) / 1000} seconds`);
   }
 });
 

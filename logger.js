@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const { createLogger, transports, format } = require("winston");
 require("winston-daily-rotate-file");
 const WhatsappTransport = require("./utils/WhatsappTransport");
@@ -22,7 +24,7 @@ const whatsappTransport = new WhatsappTransport({
 });
 
 const logger = createLogger({
-  level: "info",
+  level: process.env.LOG_LEVEL || "info",
   transports: [
     new transports.DailyRotateFile({
       level: "error",
@@ -36,7 +38,9 @@ const logger = createLogger({
       format: boringFormat,
     }),
     whatsappTransport,
-    new transports.Console({ format: coolFormat }),
+    new transports.Console({
+      format: coolFormat,
+    }),
   ],
 });
 

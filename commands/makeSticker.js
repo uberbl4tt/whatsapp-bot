@@ -1,3 +1,5 @@
+const { logger } = require("../logger")
+
 const ALLOWED_TYPES = [
   "image/gif",
   "image/png",
@@ -10,25 +12,23 @@ const ALLOWED_TYPES = [
 ];
 
 async function makeSticker(message, client) {
-  console.log("Downloading media");
+  logger.info("Making stickers", { userId: message.from });
   const media = await message.downloadMedia();
 
-  console.log("Checking media filetype");
   if (!ALLOWED_TYPES.includes(media.mimetype)) {
-    console.log(`Media type is not recognized. received ${media.mimetype}`);
-    await client.sendMessage(
+    logger.warn(`File type is unsupported! (${media.mimetype})`, { userId: message.from });
+    return await client.sendMessage(
       message.from,
       `tidak bisa membuat stiker dengan format ${media.mimetype}`,
     );
-    return;
   }
-  console.log("Media filetype is valid");
 
-  console.log("Sending back the media as a sticker");
+  logger.debug("Sending sticker...", { userId: message.from });
   await client.sendMessage(message.from, media, {
     sendMediaAsSticker: true,
     stickerName: message.body?.slice(0, 128) || "sticker",
   });
+  logger.info("Sticker is successfuly sent", { userId: message.from });
 
   return;
 }

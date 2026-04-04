@@ -4,3 +4,4 @@ node_modules/
 .vscode/
 todo.md
 logs/
+.env

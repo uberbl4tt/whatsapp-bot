@@ -1,6 +1,6 @@
 # hasbi's whatsapp bot
 
-My private personal whatsapp bot that is currently capable of:
+My private personal whatsapp bot. Currently capable of:
 - Making whatsapp stickers
 - Download video and audio from YouTube
 
