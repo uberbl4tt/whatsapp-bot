@@ -85,6 +85,11 @@ client.on("message_create", async (message) => {
   }
 });
 
+client.on("disconnected", async () => {
+  logger.info("Client is disconnected.");
+  client.sendMessage("120363407521951578@g.us", "Bot is offline");
+})
+
 process.on("uncaughtException", (err) => {
   logger.error(`FATAL - uncaughtException: ${err.message}`, { stack: err.stack })
 })
