@@ -4,6 +4,6 @@ module.exports = {
     script: "./index.js",
     watch: false,
     watch_delay: 1000,
-    ignore_watch : ["node_modules", ".wwebjs_cache", "auth", ".git"],
+    suppress_prefix_check: true
   }]
 }
