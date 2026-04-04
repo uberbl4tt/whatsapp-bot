@@ -30,7 +30,7 @@ mengecek status bot
 mengekstrak dan mendownload audio dari youtube
 menerima link youtube maupun youtube music
 
-!yts <query>
+!auds <query>
 mencari video di youtube lalu mendownloadnya sebagai audio
 
 ━━━━━━━━━━━━━━━━━━

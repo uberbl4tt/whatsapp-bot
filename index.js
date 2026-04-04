@@ -58,15 +58,20 @@ client.on("message_create", async (message) => {
         case "help":
           const data = await fs.promises.readFile("./help.txt", "utf-8");
            await client.sendMessage(message.from, data.trim());
+           return
         case "owner":
           contact = await client.getContactById(HASBI);
            await client.sendMessage(message.from, contact);
+           return
         case "ping":
            await client.sendMessage(message.from, "pong!");
-        case "yt":
+           return
+        case "aud":
            await yt(message, client, args);
-        case "yts":
+           return
+        case "auds":
            await yts(message, client, args);
+           return
       }
     }
 
@@ -81,9 +86,9 @@ client.on("message_create", async (message) => {
 });
 
 process.on("uncaughtException", (err) => {
-  console.error("Uncaught exception:", err);
-});
+  logger.error(`FATAL - uncaughtException: ${err.message}`, { stack: err.stack })
+})
 
 process.on("unhandledRejection", (err) => {
-  console.error("Unhandled rejection:", err);
-});
+  logger.error(`FATAL - unhandledRejection: ${err.message}`, { stack: err.stack })
+})
