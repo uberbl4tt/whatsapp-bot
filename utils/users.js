@@ -1,7 +1,6 @@
 const fs = require("fs");
 const users = require("../json/users.json");
 const path = require("path")
-const { logger } = require("../logger")
 
 const USERS_PATH = path.join(__dirname, "../json/users.json")
 

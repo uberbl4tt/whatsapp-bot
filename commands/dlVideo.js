@@ -4,7 +4,7 @@ const { isValidUrl } = require("../utils/isValidUrl");
 const { getMeta } = require("../utils/getMeta");
 const { getSeconds } = require("../utils/getSeconds");
 const fs = require("fs");
-const { logger } = require("../logger");
+const { logger } = require("../utils/logger");
 
 async function dlVideo(message, client, args) {
   let filename;

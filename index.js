@@ -9,11 +9,10 @@ const { registration } = require("./commands/registration.js");
 const { isValidUrl } = require("./utils/isValidUrl.js");
 const { getUser } = require("./utils/users.js");
 const client = require("./client.js");
-const { logger, setClient } = require("./logger.js");
+const { logger, setClient } = require("./utils/logger.js");
 
 const qrcode = require("qrcode-terminal");
 const fs = require("fs");
-const { ChatTypes, groupMention } = require("whatsapp-web.js");
 
 const PROCESSING_EMOJIS = ["🍳", "🧙", "🕵️", "🪄", "⏳", "🫡", "👍", "🧃"];
 const OWNER = process.env.OWNER;

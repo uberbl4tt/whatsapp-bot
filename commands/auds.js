@@ -1,6 +1,6 @@
 const youtubedl = require("youtube-dl-exec");
 const { yt } = require("./aud");
-const { logger } = require("../logger");
+const { logger } = require("../utils/logger");
 
 async function yts(message, client, args) {
   logger.info("Searching for the audio...", { userId: message.author });
