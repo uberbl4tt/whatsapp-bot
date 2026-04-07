@@ -1,5 +1,5 @@
 const { writeUser, users } = require("../utils/users");
-const { logger } = require("../utils/logger");
+const { logger } = require("../logger");
 
 async function registration(message, args) {
   try {
