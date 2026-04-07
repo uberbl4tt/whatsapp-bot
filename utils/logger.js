@@ -1,9 +1,9 @@
 require("dotenv").config({ quiet: true, override: true });
-const { users } = require("./utils/users.js")
+const { users } = require("./users.js")
 
 const { createLogger, transports, format } = require("winston");
 require("winston-daily-rotate-file");
-const WhatsappTransport = require("./utils/WhatsappTransport");
+const WhatsappTransport = require("./WhatsappTransport");
 
 const coolFormat = format.combine(
   format.timestamp({ format: "HH:mm:ss" }),
