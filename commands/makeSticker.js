@@ -11,24 +11,24 @@ const ALLOWED_TYPES = [
   "video/3gpp",
 ];
 
-async function makeSticker(message, client) {
-  logger.info("Making stickers", { userId: message.from });
+async function makeSticker(body, message, client) {
+  logger.info("Making stickers", { userId: message.author });
   const media = await message.downloadMedia();
 
   if (!ALLOWED_TYPES.includes(media.mimetype)) {
-    logger.warn(`File type is unsupported! (${media.mimetype})`, { userId: message.from });
+    logger.warn(`File type is unsupported! (${media.mimetype})`, { userId: message.author });
     return await client.sendMessage(
       message.from,
       `tidak bisa membuat stiker dengan format ${media.mimetype}`,
     );
   }
 
-  logger.debug("Sending sticker...", { userId: message.from });
+  logger.debug("Sending sticker...", { userId: message.author });
   await client.sendMessage(message.from, media, {
     sendMediaAsSticker: true,
-    stickerName: message.body?.slice(0, 128) || "sticker",
+    stickerName: body?.slice(0, 128) || "sticker",
   });
-  logger.info("Sticker is successfuly sent", { userId: message.from });
+  logger.info("Sticker is successfuly sent", { userId: message.author });
 
   return;
 }

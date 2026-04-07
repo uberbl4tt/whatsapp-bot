@@ -3,7 +3,7 @@ const { yt } = require("./aud");
 const { logger } = require("../logger");
 
 async function yts(message, client, args) {
-  logger.info("Searching for the audio...", { userId: message.from });
+  logger.info("Searching for the audio...", { userId: message.author });
   const processing = await message.reply("mencari audio");
 
   const info = await youtubedl(`ytsearch:${args}`, {
@@ -12,14 +12,14 @@ async function yts(message, client, args) {
     print: "title,duration",
   });
   if (!info) {
-    logger.warn("Cannot find the audio", { userId: message.from });
+    logger.warn("Cannot find the audio", { userId: message.author });
     return await processing.reply("tidak bisa menemukan audio");
   }
 
-  logger.debug("Found the audio!", { userId: message.from });
+  logger.debug("Found the audio!", { userId: message.author });
   const [title, duration, id] = info.split("\n");
   logger.debug("Video metadata", {
-    userId: message.from,
+    userId: message.author,
     title,
     duration,
     id,

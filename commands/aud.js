@@ -17,22 +17,22 @@ async function yt(
   const tmpPath = `/tmp/${Date.now()}`;
   let processing;
   try {
-    logger.info("Processing url", { userId: message.from });
+    logger.info("Processing url", { userId: message.author });
     processing = pastProcessing ?? (await message.reply("memproses url..."));
 
     if (!isValidUrl(args)) {
       await new Promise((resolve) => setTimeout(resolve, 500));
       await processing.edit(`url tidak valid (menerima ${args})`, {
-        userId: message.from,
+        userId: message.author,
       });
       logger.warn(`Invalid URL detected (accepted ${args}).`);
       return;
     }
 
     logger.debug(`URL is valid. Starting download process from ${args}`, {
-      userId: message.from,
+      userId: message.author,
     });
-    logger.info("Downloading file.", { userId: message.from });
+    logger.info("Downloading file.", { userId: message.author });
     await processing.edit("memulai proses download...");
     const dlProcess = youtubedl(args, {
       extractAudio: true,
@@ -42,14 +42,14 @@ async function yt(
       output: `${tmpPath}.mp3`,
     });
 
-    logger.debug("Verifying video while downloading.", { userId: message.from });
+    logger.debug("Verifying video while downloading.", { userId: message.author });
     await processing.edit("memverifikasi video...");
     const meta = pastInfo ?? (await getMeta(args));
 
     const secondDuration = getSeconds(meta.duration);
     if (secondDuration > 5460) {
       logger.warn(`Duration is too long (accepted ${secondDuration})`, {
-        userId: message.from,
+        userId: message.author,
       });
       await processing.edit(`durasi terlalu panjang! (maks. 1:30:59)`);
       return;
@@ -57,25 +57,25 @@ async function yt(
 
     logger.debug(
       "Video has already been verified, waiting for the download to finish.",
-      { userId: message.from },
+      { userId: message.author },
     );
     await processing.edit(
       "video berhasil diverifikasi! menunggu download selesai...",
     );
     await dlProcess;
 
-    logger.debug("Renaming the file", { userId: message.from });
+    logger.debug("Renaming the file", { userId: message.author });
     filename = meta.title.replace(/[\/\0]/g, "_").replace(/\_+/g, "_");
     fs.renameSync(`${tmpPath}.mp3`, `/tmp/${filename}.mp3`);
 
-    logger.debug("Sending the file...", { userId: message.from });
+    logger.debug("Sending the file...", { userId: message.author });
     await processing.edit("mengirim file...");
 
     const audio = MessageMedia.fromFilePath(`/tmp/${filename}.mp3`);
     await client.sendMessage(message.from, audio, {
       sendMediaAsDocument: true,
     });
-    logger.info("File is sent, closing the task...", { userId: message.from });
+    logger.info("File is sent, closing the task...", { userId: message.author });
 
     await processing.edit("selesai!");
   } catch (err) {
@@ -84,21 +84,22 @@ async function yt(
       err.stderr?.includes("Unable to extract")
     ) {
       logger.warn(`URL is invalid (accepted ${args})`, {
-        userId: message.from,
+        userId: message.author,
       });
       await processing?.edit(`url tidak valid (menerima ${args})`);
     } else if (err.stderr?.includes("Video unavailable")) {
-      logger.warn("Video was not found.", { userId: message.from });
+      logger.warn("Video was not found.", { userId: message.author });
       await processing?.edit("video tidak tersedia!");
     } else if (err.stderr?.includes("Private video")) {
-      logger.warn("The video was private", { userId: message.from });
+      logger.warn("The video was private", { userId: message.author });
       await processing?.edit("video ini private!");
     } else {
       await processing?.edit("terjadi kesalahan!");
-      logger.error(err.message, { userId: message.from, stack: err.stack });
+            logger.error(err.message, { messageId: message, stack: err.stack })
+;
     }
   } finally {
-    logger.debug("Deleting cache...", { userId: message.from });
+    logger.debug("Deleting cache...", { userId: message.author });
     if (fs.existsSync(`${tmpPath}.mp3`)) fs.unlinkSync(`${tmpPath}.mp3`);
     if (fs.existsSync(`${tmpPath}.webm`)) fs.unlinkSync(`${tmpPath}.webm`);
     if (filename && fs.existsSync(`/tmp/${filename}.mp3`))
