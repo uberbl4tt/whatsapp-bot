@@ -17,6 +17,11 @@ coming soon:
 2. instagram
 
 ━━━━━━━━━━━━━━━━━━
+  group chat
+━━━━━━━━━━━━━━━━━━
+bot bisa menerima perintah dalam group chat ketika bot di-mention
+
+━━━━━━━━━━━━━━━━━━
   perintah
 ━━━━━━━━━━━━━━━━━━
 
